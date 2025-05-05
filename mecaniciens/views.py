@@ -1,4 +1,7 @@
 
+
+# Create your views here.
+
 from urllib import request
 from django.shortcuts import render
 
