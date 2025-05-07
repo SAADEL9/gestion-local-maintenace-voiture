@@ -19,11 +19,14 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from administration.admin import admin_site
 
+
 urlpatterns = [
     path('admin/', admin_site.urls),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('clients/', include('clients.urls')),
     path('vehicules/', include('vehicules.urls')),
+    path('mecanicien/',include('mecaniciens.urls')),
+   
    # path('reparation/', include('reparation.urls')),
     #path('rendez-vous/', include('rendez_vous.urls')),
 ] 

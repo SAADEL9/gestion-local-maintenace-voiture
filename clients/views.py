@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+
+from mecaniciens.models import Mecanicien
 from .models import Client
 from .form import ClientRegistrationForm, ClientUpdateForm
 from vehicules.models import Vehicule
@@ -16,16 +18,26 @@ def connexion(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
+            
             if user is not None:
                 login(request, user)
-                # Get the client associated with this user
+                # Vérifier le type d'utilisateur
                 try:
                     client = Client.objects.get(user=user)
                     messages.success(request, f'Bienvenue {username}!')
                     return redirect('clients:profil', pk=client.pk)
                 except Client.DoesNotExist:
-                    messages.error(request, 'Compte client non trouvé.')
-                    return redirect('clients:connexion')
+                    try:
+                        mecanicien = Mecanicien.objects.get(user=user)
+                        messages.success(request, f'Bienvenue {username}!')
+                        return redirect('mecaniciens:mecanicien_dashboard')
+                    except Mecanicien.DoesNotExist:
+                        if user.is_staff:
+                            return redirect('admin:index')
+                        else:
+                            messages.error(request, 'Type d\'utilisateur non reconnu.')
+                            logout(request)
+                            return redirect('clients:connexion')
             else:
                 messages.error(request, 'Nom d\'utilisateur ou mot de passe incorrect.')
         else:

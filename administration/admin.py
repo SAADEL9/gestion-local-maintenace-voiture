@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from clients.models import Client
+from rendez_vous.models import RendezVous
 from vehicules.models import Vehicule
 from reparation.models import Reparation
 #from rendez_vous.models import RendezVous
@@ -79,4 +80,15 @@ class MecanicienAdmin(admin.ModelAdmin):
     search_fields = ('nom', 'prenom', 'experience', 'specialite')
     list_filter = ('specialite',)
 
+@admin.register(RendezVous, site=admin_site)
+class RendzeVousAdmin(admin.ModelAdmin):
+    list_display = ('client', 'vehicule', 'date_heure', 'status')
+    search_fields = ('client', 'vehicule', 'date_heure', 'status')
+    list_filter = ('date_creation',)
+
+@admin.register(Reparation, site=admin_site)
+class ReparationAdmin(admin.ModelAdmin):
+    list_display = ('vehicule', 'date_debut', 'date_fin', 'etat', 'mecanicien', 'cout','date_creation','date_modification')
+    search_fields = ('vehicule__marque', 'vehicule__immatricule', 'description','date_creation','date_modification')
+    list_filter = ('etat', 'date_debut', 'date_fin')
 
