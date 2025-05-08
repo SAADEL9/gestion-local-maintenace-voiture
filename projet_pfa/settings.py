@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'projet_pfa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pfa',
+        'NAME': 'pfa2',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

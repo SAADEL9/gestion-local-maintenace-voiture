@@ -17,7 +17,7 @@ class Reparation(models.Model):
     description = models.TextField()
     etat = models.CharField(max_length=20, choices=ETAT_CHOICES, default='en_attente')
     mecanicien = models.ForeignKey(Mecanicien, on_delete=models.SET_NULL, null=True, related_name='reparations')
-    cout = models.DecimalField(max_digits=10, decimal_places=2)
+    cout = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
     notes_mecanicien = models.TextField(blank=True, null=True)
     date_creation = models.DateTimeField(auto_now_add=True)
     date_modification = models.DateTimeField(auto_now=True)

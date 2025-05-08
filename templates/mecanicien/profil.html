@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block content %}
+<style>
+    .profile-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  max-width: 600px;
+  margin: 1rem auto;
+}
+
+.profile-header h3 {
+  font-size: 1.4rem;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #2563eb;
+  padding-bottom: 0.5rem;
+}
+
+.profile-body p {
+  margin: 0.75rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.profile-body strong {
+  color: #111;
+  font-weight: 600;
+}
+
+</style>
+<div class="profile-card">
+    <div class="profile-header">
+        <h3>Informations Personnelles</h3>
+    </div>
+    <div class="profile-body">
+        <p><strong>Nom :</strong> {{ mecanicien.nom }}</p>
+        <p><strong>Prénom :</strong> {{ mecanicien.prenom }}</p>
+        <p><strong>Spécialité :</strong> {{ mecanicien.specialite }}</p>
+    </div>
+</div>
+
+{% endblock %}

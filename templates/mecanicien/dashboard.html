@@ -2,15 +2,154 @@
 
 {% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mecanicien dashboard</title>
+
+<style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+    
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .header {
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      color: #1e40af;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      color: #555;
+      font-size: 1rem;
+    }
+
+    .card .number {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .blue { color: #2563eb; }
+    .orange { color: #f97316; }
+    .green { color: #16a34a; }
+
+    .table-section {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .table-section h2 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      color: #1e293b;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    @media (max-width: 600px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>mecanicien dashboard</h1>
+  <div class="container">
+    <div class="header">
+      <h1>mecanicien Dashboard</h1>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Today's Appointments</h3>
+        <div class="number blue">8</div>
+      </div>
+      <div class="card">
+        <h3>reparation en cours</h3>
+        <div class="number orange">5</div>
+      </div>
+      <div class="card">
+        <h3>reparations complete</h3>
+        <div class="number green">12</div>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <h2>Rendez-vous à venir</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>client</th>
+            <th>Vehicle</th>
+            <th>date</th>
+            <th>Service</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alice Smith</td>
+            <td>Toyota Corolla</td>
+            <td>10:00 AM</td>
+            <td>Oil Change</td>
+          </tr>
+          <tr>
+            <td>Bob Johnson</td>
+            <td>Ford F-150</td>
+            <td>11:30 AM</td>
+            <td>Brake Inspection</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </body>
-</html>
+
 {% endblock %}

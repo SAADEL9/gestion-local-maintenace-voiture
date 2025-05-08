@@ -23,15 +23,17 @@ def connexion(request):
                 login(request, user)
                 # Vérifier le type d'utilisateur
                 try:
-                    client = Client.objects.get(user=user)
-                    messages.success(request, f'Bienvenue {username}!')
-                    return redirect('clients:profil', pk=client.pk)
-                except Client.DoesNotExist:
+                    mecanicien = Mecanicien.objects.get(user=user)
+                        
+                    messages.success(request, f'Bienvenue {mecanicien.nom} {mecanicien.prenom}!')
+                    return redirect('mecaniciens:mecanicien_dashboard')
+                    
+                except Mecanicien.DoesNotExist:
                     try:
-                        mecanicien = Mecanicien.objects.get(user=user)
+                        client = Client.objects.get(user=user)
                         messages.success(request, f'Bienvenue {username}!')
-                        return redirect('mecaniciens:mecanicien_dashboard')
-                    except Mecanicien.DoesNotExist:
+                        return redirect('clients:profil', pk=client.pk)
+                    except Client.DoesNotExist:
                         if user.is_staff:
                             return redirect('admin:index')
                         else:

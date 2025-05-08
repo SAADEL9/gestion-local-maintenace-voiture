@@ -3,31 +3,193 @@
 {% block title %}Inscription{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="text-center">Inscription</h3>
-            </div>
-            <div class="card-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                            {{ field.errors }}
-                            {{ field }}
-                        </div>
-                    {% endfor %}
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">S'inscrire</button>
-                    </div>
-                </form>
-                <div class="text-center mt-3">
-                    <p>Déjà un compte ? <a href="{% url 'clients:connexion' %}">Se connecter</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<style>/* From Uiverse.io by Yaya12085 */ 
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 550px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      position: relative;
+      margin-left: 37% ;
+      margin-top: 5%;
+      
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .title {
+      font-size: 28px;
+      color: royalblue;
+      font-weight: 600;
+      letter-spacing: -1px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding-left: 30px;
+    }
+    
+    .title::before,.title::after {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      left: 0px;
+      background-color: royalblue;
+    }
+    
+    .title::before {
+      width: 18px;
+      height: 18px;
+      background-color: royalblue;
+    }
+    
+    .title::after {
+      width: 18px;
+      height: 18px;
+      animation: pulse 1s linear infinite;
+    }
+    
+    .message, .signin {
+      color: rgba(88, 87, 87, 0.822);
+      font-size: 14px;
+    }
+    
+    .signin {
+      text-align: center;
+    }
+    
+    .signin a {
+      color: royalblue;
+    }
+    
+    .signin a:hover {
+      text-decoration: underline royalblue;
+    }
+    
+    .flex {
+      display: flex;
+      width: 100%;
+      gap: 6px;
+    }
+    
+    .form label {
+      position: relative;
+    }
+    
+    .form label input {
+      width: 100%;
+      padding: 10px 10px 20px 10px;
+      outline: 0;
+      border: 1px solid rgba(105, 105, 105, 0.397);
+      border-radius: 10px;
+    }
+    
+    .form label input + span {
+      position: absolute;
+      left: 10px;
+      top: 15px;
+      color: grey;
+      font-size: 0.9em;
+      cursor: text;
+      transition: 0.3s ease;
+    }
+    
+    .form label input:placeholder-shown + span {
+      top: 15px;
+      font-size: 0.9em;
+    }
+    
+    .form label input:focus + span,.form label input:valid + span {
+      top: 30px;
+      font-size: 1em;
+      font-weight: 600;
+    }
+    
+    .form label input:valid + span {
+      color: green;
+    }
+    
+    .submit {
+      border: none;
+      outline: none;
+      background-color: royalblue;
+      padding: 10px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      transform: .3s ease;
+    }
+    
+    .submit:hover {
+      background-color: rgb(56, 90, 194);
+    }
+    
+    @keyframes pulse {
+      from {
+        transform: scale(0.9);
+        opacity: 1;
+      }
+    
+      to {
+        transform: scale(1.8);
+        opacity: 0;
+      }
+    }</style>
+<form method="post" class="form">
+    {% csrf_token %}
+    <p class="title">Register </p>
+    <p class="message">Signup now and get full access to our app. </p>
+
+    <label>
+        {{ form.username }}
+        {{ form.username.errors }}
+        <span>Username</span>
+    </label>
+
+    
+        <label>
+            {{ form.prenom }}
+            {{ form.prenom.errors }}
+            <span>prenom</span>
+        </label>
+
+        <label>
+            {{ form.nom }}
+            {{ form.nom.errors }}
+            <span>nom</span>
+        </label>
+    
+
+    <label>
+        {{ form.email }}
+        {{ form.email.errors }}
+        <span>Email</span>
+    </label> 
+
+    <label>
+        {{ form.telephone }}
+        {{ form.telephone.errors }}
+        <span>Telephone</span>
+    </label> 
+
+    <label>
+        {{ form.password1 }}
+        {{ form.password1.errors }}
+        <span>Password</span>
+    </label>
+
+    <label>
+        {{ form.password2 }}
+        {{ form.password2.errors }}
+        <span>Confirm password</span>
+    </label>
+
+    <button type="submit" class="submit">Submit</button>
+
+    <p class="signin">Already have an account? <a href="{% url 'clients:connexion' %}">Signin</a> </p>
+</form>
+
 {% endblock %}

@@ -9,6 +9,7 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
+  
     <style>
         :root {
             --primary-color: #007bff;
@@ -99,6 +100,23 @@
                                     <i class="fas fa-sign-out-alt"></i> Déconnexion
                                 </a>
                             </li>
+                        {% elif user.mecanicien %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'mecaniciens:mecanicien_dashboard'  %}">
+                                <i class="fas fa-user"></i> mecanicien dashboard
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'mecaniciens:profil' user.mecanicien.pk %}">
+                                    <i class="fas fa-user"></i> Mon Profil
+                                </a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'mecaniciens:deconnexion' %}">
+                                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                                </a>
+                            </li>
                         {% else %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'clients:inscription' %}">S'inscrire</a>
@@ -137,36 +155,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>À propos</h5>
-                    <p>Votre partenaire de confiance pour l'entretien et la réparation automobile. Service professionnel, rapide et fiable.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Liens rapides</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}" class="text-white">Accueil</a></li>
-                        <li><a href="#services" class="text-white">Services</a></li>
-                        <li><a href="#contact" class="text-white">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contact</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-phone me-2"></i> +212 50 55 25 65</li>
-                        <li><i class="fas fa-envelope me-2"></i> wafdisouhail@gmail.com</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i> 380 Boulevard Brahim Roudani Casablanca</li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="mt-4 mb-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2025 Garage Auto. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
+   
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
