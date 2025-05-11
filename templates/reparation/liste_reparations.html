@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm rounded-4 border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+            <h2 class="mb-0">
+                <i class="fas fa-tools me-2"></i>Liste des Réparations
+            </h2>
+        </div>
+
+        <div class="card-body px-4 py-5">
+            {% if messages %}
+                <div class="messages mb-4">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                            <i class="fas fa-info-circle me-2"></i>
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="table-responsive rounded-3 overflow-hidden">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light text-center">
+                        <tr>
+                            <th>Véhicule</th>
+                            <th>Client</th>
+                            <th>Date Début</th>
+                            <th>Date Fin</th>
+                            <th>État</th>
+                            <th>Mécanicien</th>
+                            <th>Coût</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reparation in reparations %}
+                            <tr>
+                                <td>
+                                    <i class="fas fa-car me-2 text-muted"></i>
+                                    {{ reparation.vehicule.marque }} {{ reparation.vehicule.immatricule }}
+                                </td>
+                                <td>
+                                    <i class="fas fa-user me-2 text-muted"></i>
+                                    {{ reparation.client.nom }} {{ reparation.client.prenom }}
+                                </td>
+                                <td>{{ reparation.date_debut|date:"d/m/Y H:i" }}</td>
+                                <td>{{ reparation.date_fin|date:"d/m/Y H:i"|default:"-" }}</td>
+                                <td>
+                                    <span class="badge {% if reparation.etat == 'termine' %}bg-success
+                                                       {% elif reparation.etat == 'en_cours' %}bg-warning
+                                                       {% elif reparation.etat == 'en_pause' %}bg-info
+                                                       {% elif reparation.etat == 'annule' %}bg-danger
+                                                       {% else %}bg-secondary{% endif %}">
+                                        {{ reparation.get_etat_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <i class="fas fa-wrench me-2 text-muted"></i>
+                                    {{ reparation.mecanicien.nom }} {{ reparation.mecanicien.prenom }}
+                                </td>
+                                <td>
+                                    {% if reparation.cout %}
+                                        <span class="badge bg-primary">{{ reparation.cout }} €</span>
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'reparation:detail_reparation' reparation.pk %}" 
+                                           class="btn btn-info btn-sm" 
+                                           title="Voir les détails">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+
+                                        {% if user.mecanicien %}
+                                            <a href="{% url 'reparation:modifier_reparation' reparation.pk %}" 
+                                               class="btn btn-warning btn-sm" 
+                                               title="Modifier">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="{% url 'reparation:supprimer_reparation' reparation.pk %}" 
+                                               class="btn btn-danger btn-sm" 
+                                               title="Supprimer">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="8" class="text-center py-5">
+                                    <div class="text-muted">
+                                        <i class="fas fa-inbox fa-3x mb-3"></i>
+                                        <p class="mb-0">Aucune réparation trouvée</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table th {
+        font-weight: 600;
+        background-color: #f8f9fa;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .btn-group .btn {
+        margin: 0 2px;
+        border-radius: 0.375rem;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.45em 0.75em;
+        border-radius: 2rem;
+        font-weight: 500;
+    }
+
+    .alert {
+        border-radius: 0.5rem;
+    }
+
+    .table-responsive {
+        border: 1px solid #dee2e6;
+        background-color: #fff;
+    }
+</style>
+{% endblock %}

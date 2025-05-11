@@ -1,79 +1,208 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Garage Auto{% endblock %}</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-  
     <style>
         :root {
-            --primary-color: #007bff;
-            --secondary-color: #6c757d;
+            --primary-color: #2c3e50; /* Dark blue-gray */
+            --secondary-color: #3498db; /* Bright blue */
+            --accent-color: #f39c12; /* Golden yellow */
+            --text-color-light: #ecf0f1; /* Very light gray */
+            --text-color-dark: #333;
+            --bg-light: #f8f9fa;
+            --bg-dark: #343a40;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color-dark);
+            margin: 0;
+            padding-bottom: 60px; /* To account for fixed footer */
         }
-        
+
         .navbar {
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            background-color: var(--primary-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,.15);
+            padding: 0.8rem 0;
         }
-        
+
+        .navbar-brand {
+            color: var(--text-color-light) !important;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .navbar-brand i {
+            margin-right: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: var(--text-color-light);
+            font-size: 1.25rem;
+        }
+
+        .navbar-toggler:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(var(--secondary-color-rgb), .5);
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--text-color-light) !important;
+            padding: 0.7rem 1rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--accent-color) !important;
+        }
+
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1920x1080');
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1920x1080');
             background-size: cover;
             background-position: center;
+            color: var(--text-color-light);
+            text-align: center;
+            padding: 8rem 0;
+            margin-bottom: 2rem;
         }
-        
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            padding: 1rem 2rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: darken(var(--secondary-color), 10%);
+            border-color: darken(var(--secondary-color), 10%);
+        }
+
         .card {
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid rgba(0,0,0,.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,.1);
+            border-radius: 0.5rem;
+        }
+
+        .card:hover {
+           
+            box-shadow: 0 8px 16px rgba(0,0,0,.2);
+        }
+
+        .process {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .process h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-color-dark);
+        }
+
+        .process .rounded-circle {
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-color);
+            color: var(--text-color-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .process .rounded-circle:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary-color);
+        }
+
+        footer {
+            background-color: var(--bg-dark);
+            color: var(--text-color-light);
+            padding: 2rem 0;
+            text-align: center;
+           
+            bottom: 0;
+            width: 100%;
+            z-index: 99; /* Ensure it's above other content */
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Custom styles for specific elements */
+        .nav-item.dropdown .dropdown-menu {
+            background-color: var(--primary-color);
             border: none;
             box-shadow: 0 2px 4px rgba(0,0,0,.1);
         }
-        
-        .card:hover {
-            transform: translateY(-5px);
+
+        .nav-item.dropdown .dropdown-item {
+            color: var(--text-color-light);
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
         }
-        
-        .btn-primary {
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
+
+        .nav-item.dropdown .dropdown-item:hover {
+            background-color: darken(var(--primary-color), 10%);
+            color: var(--accent-color);
         }
-        
-        .process .rounded-circle {
-            transition: transform 0.3s ease;
+
+        .alert-dismissible .btn-close {
+            background-color: transparent;
+            color: var(--text-color-dark);
+            opacity: 0.7;
         }
-        
-        .process .rounded-circle:hover {
-            transform: scale(1.1);
-        }
-        
-        footer {
-            background-color: #343a40;
-            color: white;
-            padding: 3rem 0;
+
+        .alert-dismissible .btn-close:hover {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
-                <i class="fas fa-car-side text-primary"></i> Garage Auto
+                <i class="fas fa-car-side"></i> Garage Auto
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#services">Services</a>
@@ -86,51 +215,60 @@
                     {% if user.is_authenticated %}
                         {% if user.client %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'rendez_vous:mes_rendez_vous' %}">
+                                <a class="nav-link {% if request.resolver_match.namespace == 'rendez_vous' and request.resolver_match.url_name == 'mes_rendez_vous' %}active{% endif %}" href="{% url 'rendez_vous:mes_rendez_vous' %}">
                                     <i class="fas fa-calendar-alt"></i> Mes Rendez-vous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'clients:profil' user.client.pk %}">
-                                    <i class="fas fa-user"></i> Mon Profil
+                                <a class="nav-link {% if request.resolver_match.namespace == 'reparation' and request.resolver_match.url_name == 'liste_reparations' %}active{% endif %}" href="{% url 'reparation:liste_reparations' %}">
+                                    <i class="fas fa-wrench"></i> mes reparations
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'clients:deconnexion' %}">
-                                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle {% if request.resolver_match.namespace == 'clients' and request.resolver_match.url_name in 'profil,deconnexion' %}active{% endif %}" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i> Mon Compte
                                 </a>
+                                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="{% url 'clients:profil' user.client.pk %}"><i class="fas fa-id-card"></i> Profil</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'clients:deconnexion' %}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                                </ul>
                             </li>
                         {% elif user.mecanicien %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'mecaniciens:mecanicien_dashboard'  %}">
-                                <i class="fas fa-user"></i> mecanicien dashboard
-                            </a>
-                        </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'mecaniciens:profil' user.mecanicien.pk %}">
-                                    <i class="fas fa-user"></i> Mon Profil
+                                <a class="nav-link {% if request.resolver_match.namespace == 'mecaniciens' and request.resolver_match.url_name == 'mecanicien_dashboard' %}active{% endif %}" href="{% url 'mecaniciens:mecanicien_dashboard' %}">
+                                    <i class="fas fa-tachometer-alt"></i> mecanicien dashboard
                                 </a>
                             </li>
-                           
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'mecaniciens:deconnexion' %}">
-                                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                                <a class="nav-link {% if request.resolver_match.namespace == 'reparation' and request.resolver_match.url_name == 'liste_reparations' %}active{% endif %}" href="{% url 'reparation:liste_reparations' %}">
+                                    <i class="fas fa-tools"></i> liste des reparations
                                 </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle {% if request.resolver_match.namespace == 'mecaniciens' and request.resolver_match.url_name in 'profil,deconnexion' %}active{% endif %}" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i> Mon Compte
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="{% url 'mecaniciens:profil' user.mecanicien.pk %}"><i class="fas fa-id-card"></i> Profil</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'mecaniciens:deconnexion' %}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                                </ul>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'clients:inscription' %}">S'inscrire</a>
+                                <a class="nav-link {% if request.resolver_match.url_name == 'clients:inscription' %}active{% endif %}" href="{% url 'clients:inscription' %}">S'inscrire</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'clients:connexion' %}">Se connecter</a>
+                                <a class="nav-link {% if request.resolver_match.url_name == 'clients:connexion' %}active{% endif %}" href="{% url 'clients:connexion' %}">Se connecter</a>
                             </li>
                         {% endif %}
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'clients:inscription' %}">S'inscrire</a>
+                            <a class="nav-link {% if request.resolver_match.url_name == 'clients:inscription' %}active{% endif %}" href="{% url 'clients:inscription' %}">S'inscrire</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'clients:connexion' %}">Se connecter</a>
+                            <a class="nav-link {% if request.resolver_match.url_name == 'clients:connexion' %}active{% endif %}" href="{% url 'clients:connexion' %}">Se connecter</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -138,7 +276,6 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main>
         {% if messages %}
             <div class="container mt-3">
@@ -150,15 +287,12 @@
                 {% endfor %}
             </div>
         {% endif %}
-        
+
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
    
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

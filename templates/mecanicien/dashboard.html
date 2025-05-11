@@ -1,155 +1,202 @@
 {% extends 'base.html' %}
+{% block title %}Tableau de Bord Mécanicien{% endblock %}
 
 {% block content %}
-
-
 <style>
-    * {
-      box-sizing: border-box;
-    }
+ 
 
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
-    
-    }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+  }
 
-    .container {
-      max-width: 1200px;
-      margin: auto;
-    }
+  .container {
+    height:40px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem 1rem;
+  }
 
-    .header {
-      margin-bottom: 2rem;
-    }
+  .header h1 {
+    font-size: 2rem;
+    color: #1e40af;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
 
-    .header h1 {
-      font-size: 2rem;
-      color: #1e40af;
-    }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
 
+  .card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  }
+
+  .card h3 {
+    margin: 0 0 0.5rem;
+    color: #555;
+    font-size: 1.1rem;
+  }
+
+  .card .number {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .blue { color: #2563eb; }
+  .orange { color: #f97316; }
+  .green { color: #16a34a; }
+  .red { color: #dc2626; }
+  .purple { color: #7c3aed; }
+
+  .table-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .table-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.25rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+
+  th {
+    background-color: #f1f5f9;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .badge {
+    padding: 0.45em 0.75em;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
     .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .card {
-      background-color: white;
-      border-radius: 10px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: 0.3s ease;
-    }
-
-    .card:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
-    .card h3 {
-      margin: 0 0 8px;
-      color: #555;
-      font-size: 1rem;
-    }
-
-    .card .number {
-      font-size: 2rem;
-      font-weight: bold;
-    }
-
-    .blue { color: #2563eb; }
-    .orange { color: #f97316; }
-    .green { color: #16a34a; }
-
-    .table-section {
-      background-color: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .table-section h2 {
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-      color: #1e293b;
+      grid-template-columns: 1fr;
     }
 
     table {
-      width: 100%;
-      border-collapse: collapse;
+      font-size: 0.9rem;
     }
 
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #e2e8f0;
+    .btn {
+      margin: 2px 0;
+      display: block;
     }
+  }
+</style>
 
-    th {
-      background-color: #f1f5f9;
-      font-weight: 600;
-      color: #374151;
-    }
+<div class="container">
+  <div class="header">
+    <h1><i class="fas fa-tachometer-alt me-2"></i>  Mécanicien dashboard</h1>
+  </div>
 
-    @media (max-width: 600px) {
-      .cards {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>mecanicien Dashboard</h1>
+  <div class="cards">
+    <div class="card">
+      <h3>Réparations en attente</h3>
+      <div class="number blue">{{ reparations_en_attente|default:"0" }}</div>
     </div>
-
-    <div class="cards">
-      <div class="card">
-        <h3>Today's Appointments</h3>
-        <div class="number blue">8</div>
-      </div>
-      <div class="card">
-        <h3>reparation en cours</h3>
-        <div class="number orange">5</div>
-      </div>
-      <div class="card">
-        <h3>reparations complete</h3>
-        <div class="number green">12</div>
-      </div>
+    <div class="card">
+      <h3>Réparations en cours</h3>
+      <div class="number orange">{{ reparations_en_cours|default:"0" }}</div>
     </div>
-
-    <div class="table-section">
-      <h2>Rendez-vous à venir</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>client</th>
-            <th>Vehicle</th>
-            <th>date</th>
-            <th>Service</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Alice Smith</td>
-            <td>Toyota Corolla</td>
-            <td>10:00 AM</td>
-            <td>Oil Change</td>
-          </tr>
-          <tr>
-            <td>Bob Johnson</td>
-            <td>Ford F-150</td>
-            <td>11:30 AM</td>
-            <td>Brake Inspection</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="card">
+      <h3>Réparations en pause</h3>
+      <div class="number purple">{{ reparations_en_pause|default:"0" }}</div>
+    </div>
+    <div class="card">
+      <h3>Réparations terminées</h3>
+      <div class="number green">{{ reparations_terminees|default:"0" }}</div>
+    </div>
+    <div class="card">
+      <h3>Réparations annulées</h3>
+      <div class="number red">{{ reparations_annulees|default:"0" }}</div>
     </div>
   </div>
-</body>
 
+  <div class="table-section">
+    <h2><i class="fas fa-tools me-2"></i> Réparations en cours</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Véhicule</th>
+          <th>Client</th>
+          <th>Date début</th>
+          <th>Description</th>
+          <th>État</th>
+          <th>Coût</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reparation in reparations_actives %}
+        <tr>
+          <td><i class="fas fa-car me-1 text-muted"></i> {{ reparation.vehicule.marque }} {{ reparation.vehicule.immatricule }}</td>
+          <td>{{ reparation.client.nom }} {{ reparation.client.prenom }}</td>
+          <td>{{ reparation.date_debut|date:"d/m/Y H:i" }}</td>
+          <td>{{ reparation.description|truncatechars:50 }}</td>
+          <td>
+            <span class="badge 
+              {% if reparation.etat == 'termine' %}badge-termine
+              {% elif reparation.etat == 'en_cours' %}badge-en-cours
+              {% elif reparation.etat == 'en_pause' %}badge-en-pause
+              {% elif reparation.etat == 'annule' %}badge-annule
+              {% else %}badge-en-attente{% endif %}">
+              {{ reparation.get_etat_display }}
+            </span>
+          </td>
+          <td>{{ reparation.cout|default:"-" }} €</td>
+          <td>
+            <a href="{% url 'reparation:detail_reparation' reparation.pk %}" class="btn btn-info btn-sm">
+              <i class="fas fa-eye"></i> Détails
+            </a>
+            <a href="{% url 'reparation:modifier_reparation' reparation.pk %}" class="btn btn-warning btn-sm">
+              <i class="fas fa-edit"></i> Modifier
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7" class="text-center">Aucune réparation active</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}

@@ -1,50 +1,63 @@
 {% extends 'base.html' %}
-
 {% block title %}Mes Rendez-vous{% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h3>Mes Rendez-vous</h3>
-        <a href="{% url 'rendez_vous:prendre_rendez_vous' %}" class="btn btn-primary">Prendre un rendez-vous</a>
-    </div>
-    <div class="card-body">
-        {% if rendez_vous %}
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Date et Heure</th>
-                            <th>Véhicule</th>
-                            <th>Description</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for rdv in rendez_vous %}
+<div class="container py-5">
+    <div class="card shadow rounded-4 border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4 py-3 px-4">
+            <h3 class="mb-0 fw-bold"><i class="fas fa-calendar-alt me-2"></i> Mes Rendez-vous</h3>
+            <a href="{% url 'rendez_vous:prendre_rendez_vous' %}" class="btn btn-light fw-semibold shadow-sm">
+                <i class="fas fa-plus me-1"></i> Prendre un rendez-vous
+            </a>
+        </div>
+        <div class="card-body p-4">
+            {% if rendez_vous %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle text-center">
+                        <thead class="table-light">
                             <tr>
-                                <td>{{ rdv.date_heure|date:"d/m/Y H:i" }}</td>
-                                <td>{{ rdv.vehicule }}</td>
-                                <td>{{ rdv.description }}</td>
-                                <td>
-                                    <span class="badge {% if rdv.status == 'confirme' %}bg-success{% elif rdv.status == 'en_attente' %}bg-warning{% else %}bg-danger{% endif %}">
-                                        {{ rdv.get_status_display }}
-                                    </span>
-                                </td>
-                                <td>
-                                    {% if rdv.status == 'en_attente' %}
-                                        <a href="{% url 'rendez_vous:annuler_rendez_vous' rdv.pk %}" class="btn btn-danger btn-sm">Annuler</a>
-                                    {% endif %}
-                                </td>
+                                <th>Date et Heure</th>
+                                <th>Véhicule</th>
+                                <th>Description</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
-            <p class="text-center">Vous n'avez pas encore de rendez-vous.</p>
-        {% endif %}
+                        </thead>
+                        <tbody>
+                            {% for rdv in rendez_vous %}
+                                <tr>
+                                    <td class="fw-semibold">{{ rdv.date_heure|date:"d/m/Y H:i" }}</td>
+                                    <td>{{ rdv.vehicule }}</td>
+                                    <td>{{ rdv.description }}</td>
+                                    <td>
+                                        <span class="badge rounded-pill px-3 py-2 
+                                            {% if rdv.status == 'confirme' %}bg-success
+                                            {% elif rdv.status == 'en_attente' %}bg-warning text-dark
+                                            {% else %}bg-danger{% endif %}">
+                                            {{ rdv.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if rdv.status == 'en_attente' %}
+                                            <a href="{% url 'rendez_vous:annuler_rendez_vous' rdv.pk %}" class="btn btn-outline-danger btn-sm">
+                                                <i class="fas fa-times-circle me-1"></i> Annuler
+                                            </a>
+                                        {% else %}
+                                            <span class="text-muted small">N/A</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center text-muted py-4">
+                    <i class="fas fa-calendar-times fa-2x mb-2"></i>
+                    <p class="mb-0">Vous n'avez pas encore de rendez-vous.</p>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </div>
-{% endblock %} 
+{% endblock %}

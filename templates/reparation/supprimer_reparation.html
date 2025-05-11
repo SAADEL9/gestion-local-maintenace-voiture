@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>Supprimer la Réparation</h2>
+        </div>
+        <div class="card-body">
+            <p class="alert alert-danger">
+                Êtes-vous sûr de vouloir supprimer cette réparation ?
+            </p>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>Détails de la réparation :</h5>
+                    <p><strong>Véhicule :</strong> {{ reparation.vehicule.immatriculation }}</p>
+                    <p><strong>Client :</strong> {{ reparation.client.nom }} {{ reparation.client.prenom }}</p>
+                    <p><strong>Date de début :</strong> {{ reparation.date_debut|date:"d/m/Y H:i" }}</p>
+                    <p><strong>État :</strong> {{ reparation.get_etat_display }}</p>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'reparation:detail_reparation' reparation.pk %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Annuler
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Confirmer la suppression
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

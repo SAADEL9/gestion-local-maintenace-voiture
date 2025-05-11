@@ -1,176 +1,463 @@
+
 {% extends 'base.html' %}
+{% load static %} {% block title %}Garage Auto - Services de Maintenance
+et Réparation{% endblock %} {% block content %}
+<style>
+  .map-responsive {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+  }
+  .map-responsive iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* dark semi-transparent */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-size: 50% 50%;
+  }
+  .carousel-control-prev,
+.carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5%;
+    opacity: 1;
+}
 
-{% block title %}Garage Auto - Services de Maintenance et Réparation{% endblock %}
+.carousel-control-prev {
+    left: -2%; /* adjust more negative if needed */
+}
 
-{% block content %}
-<!-- Hero Section -->
-<section class="hero bg-dark text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <h1 class="display-4 fw-bold">Votre partenaire de confiance pour l'entretien automobile</h1>
-                <p class="lead">Service professionnel, rapide et fiable pour tous vos besoins d'entretien et de réparation automobile.</p>
-                {% if user.is_authenticated %}
-                    {% if user.client %}
-                        <a href="{% url 'rendez_vous:prendre_rendez_vous' %}" class="btn btn-primary btn-lg">Prendre rendez-vous</a>
-                    {% else %}
-                        <a href="{% url 'clients:inscription' %}" class="btn btn-primary btn-lg">S'inscrire</a>
-                    {% endif %}
-                {% else %}
-                    <a href="{% url 'clients:connexion' %}" class="btn btn-primary btn-lg">Se connecter</a>
-                {% endif %}
-                
-            </div>
-            <div class="col-md-6">
-                <img src="/templates/image/1.jpg" alt="Service Auto" class="img-fluid rounded">
-            </div>
-        </div>
+.carousel-control-next {
+    right: -2%;
+}
+.carousel-item img{
+    width: 110px;
+    height: 110px;
+}
+</style>
+<section
+  class="hero py-8 mb-5"
+  style="
+   background-image: url('/static/image/background2.jpg');
+
+    background-size: cover;
+    background-position: center;
+  "
+>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start">
+        <h1 class="display-3 fw-bold mb-4" style="color: var(--accent-color)">
+          Votre Expert Automobile de Confiance
+        </h1>
+        <p class="lead mb-4" style="color: var(--text-color-light)">
+          Des services professionnels et personnalisés pour prendre soin de
+          votre véhicule.
+        </p>
+        {% if user.is_authenticated %} {% if user.client %}
+        <a
+          href="{% url 'rendez_vous:prendre_rendez_vous' %}"
+          class="btn btn-lg btn-secondary rounded-pill shadow-lg"
+          >Prendre Rendez-vous <i class="fas fa-calendar-check ms-2"></i
+        ></a>
+        {% else %}
+        <a
+          href="{% url 'clients:inscription' %}"
+          class="btn btn-lg btn-secondary rounded-pill shadow-lg"
+          >Devenir Client <i class="fas fa-user-plus ms-2"></i
+        ></a>
+        {% endif %} {% else %}
+        <a
+          href="{% url 'clients:connexion' %}"
+          class="btn btn-lg btn-secondary rounded-pill shadow-lg"
+          >Se Connecter <i class="fas fa-sign-in-alt ms-2"></i
+        ></a>
+        {% endif %}
+      </div>
+      
     </div>
+  </div>
 </section>
 
-<!-- Services Section -->
-<section class="services py-5">
-    <div class="container">
-        <h2 class="text-center mb-5">Nos Services</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-tools fa-3x mb-3 text-primary"></i>
-                        <h3 class="card-title">Réparation Générale</h3>
-                        <p class="card-text">Service complet de réparation et maintenance pour tous types de véhicules.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-car-battery fa-3x mb-3 text-primary"></i>
-                        <h3 class="card-title">Service Électrique</h3>
-                        <p class="card-text">Diagnostic et réparation des systèmes électriques de votre véhicule.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-oil-can fa-3x mb-3 text-primary"></i>
-                        <h3 class="card-title">Entretien</h3>
-                        <p class="card-text">Vidange, filtres, freins et autres services d'entretien régulier.</p>
-                    </div>
-                </div>
-            </div>
+<section class="services py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5 fw-bold" style="color: var(--primary-color)">
+      Nos Services Exclusifs
+    </h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-lg rounded-4">
+          <div class="card-body text-center p-4">
+            <i
+              class="fas fa-wrench fa-3x mb-3"
+              style="color: var(--secondary-color)"
+            ></i>
+            <h3
+              class="card-title fw-semibold"
+              style="color: var(--text-color-dark)"
+            >
+              Diagnostic Avancé
+            </h3>
+            <p class="card-text" style="color: var(--secondary-color)">
+              Analyse électronique de pointe pour identifier rapidement les
+              problèmes.
+            </p>
+            <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill"
+              >En savoir plus</a
+            >
+          </div>
         </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-lg rounded-4">
+          <div class="card-body text-center p-4">
+            <i
+              class="fas fa-engine fa-3x mb-3"
+              style="color: var(--secondary-color)"
+            ></i>
+            <h3
+              class="card-title fw-semibold"
+              style="color: var(--text-color-dark)"
+            >
+              Réparation Moteur & Transmission
+            </h3>
+            <p class="card-text" style="color: var(--secondary-color)">
+              Expertise complète pour la réparation et la maintenance de votre
+              moteur et transmission.
+            </p>
+            <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill"
+              >En savoir plus</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-lg rounded-4">
+          <div class="card-body text-center p-4">
+            <i
+              class="fas fa-car-battery fa-3x mb-3"
+              style="color: var(--secondary-color)"
+            ></i>
+            <h3
+              class="card-title fw-semibold"
+              style="color: var(--text-color-dark)"
+            >
+              Systèmes Électriques & Électroniques
+            </h3>
+            <p class="card-text" style="color: var(--secondary-color)">
+              Solutions pour tous les problèmes électriques, de la batterie à
+              l'électronique embarquée.
+            </p>
+            <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill"
+              >En savoir plus</a
+            >
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="row mt-4 g-4">
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-lg rounded-4">
+          <div class="card-body text-center p-4">
+            <i
+              class="fas fa-tire fa-3x mb-3"
+              style="color: var(--secondary-color)"
+            ></i>
+            <h3
+              class="card-title fw-semibold"
+              style="color: var(--text-color-dark)"
+            >
+              Pneus & Alignement
+            </h3>
+            <p class="card-text" style="color: var(--secondary-color)">
+              Vente, montage, équilibrage et alignement pour une conduite
+              optimale.
+            </p>
+            <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill"
+              >En savoir plus</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-lg rounded-4">
+          <div class="card-body text-center p-4">
+            <i
+              class="fas fa-oil-can fa-3x mb-3"
+              style="color: var(--secondary-color)"
+            ></i>
+            <h3
+              class="card-title fw-semibold"
+              style="color: var(--text-color-dark)"
+            >
+              Entretien Préventif
+            </h3>
+            <p class="card-text" style="color: var(--secondary-color)">
+              Prolongez la durée de vie de votre véhicule avec nos services
+              d'entretien régulier.
+            </p>
+            <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill"
+              >En savoir plus</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-lg rounded-4">
+          <div class="card-body text-center p-4">
+            <i
+              class="fas fa-paint-roller fa-3x mb-3"
+              style="color: var(--secondary-color)"
+            ></i>
+            <h3
+              class="card-title fw-semibold"
+              style="color: var(--text-color-dark)"
+            >
+              Carrosserie & Peinture
+            </h3>
+            <p class="card-text" style="color: var(--secondary-color)">
+              Réparation de carrosserie, retouche de peinture et services
+              esthétiques.
+            </p>
+            <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill"
+              >En savoir plus</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Process Section -->
-<section class="process bg-light py-5">
-    <div class="container">
-        <h2 class="text-center mb-5">Notre Processus</h2>
-        <div class="row g-4">
-            <div class="col-md-3">
-                <div class="text-center">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <h3 class="m-0">1</h3>
-                    </div>
-                    <h4>Rendez-vous</h4>
-                    <p>Prenez rendez-vous en ligne ou par téléphone</p>
-                </div>
+<section class="testimonials py-5">
+  <div class="container">
+    <h2 class="text-center mb-5 fw-bold" style="color: var(--primary-color)">
+      Ce que nos clients disent
+    </h2>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div
+          id="carouselExampleIndicators"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Témoignage 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="1"
+              aria-label="Témoignage 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="2"
+              aria-label="Témoignage 3"
+            ></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active text-center p-5">
+              <img
+                src="https://htmlstream.com/preview/unify-v2.6/assets/img-temp/400x450/img5.jpg"
+                class="rounded-circle shadow-sm mb-3"
+                alt="Client 1"
+              />
+              <h5 class="fw-semibold" style="color: var(--text-color-dark)">
+                Ahmed K.
+              </h5>
+              <p class="blockquote" style="color: var(--secondary-color)">
+                "Service exceptionnel ! L'équipe est compétente et très
+                serviable. Mon problème de moteur a été résolu rapidement et à
+                un prix juste. Je recommande vivement ce garage."
+              </p>
+              <small class="text-muted">Propriétaire d'une Berline</small>
             </div>
-            <div class="col-md-3">
-                <div class="text-center">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <h3 class="m-0">2</h3>
-                    </div>
-                    <h4>Diagnostic</h4>
-                    <p>Évaluation complète de votre véhicule</p>
-                </div>
+            <div class="carousel-item text-center p-5">
+              <img
+                src="https://img.freepik.com/free-photo/horizontal-portrait-smiling-happy-young-pleasant-looking-female-wears-denim-shirt-stylish-glasses-with-straight-blonde-hair-expresses-positiveness-poses_176420-13176.jpg?semt=ais_hybrid&w=740"
+                class="rounded-circle shadow-sm mb-3"
+                alt="Client 2"
+              />
+              <h5 class="fw-semibold" style="color: var(--text-color-dark)">
+                Fatima Z.
+              </h5>
+              <p class="blockquote" style="color: var(--secondary-color)">
+                "Très satisfaite de l'entretien de ma voiture. Ils ont été
+                méticuleux et m'ont donné de bons conseils. L'accueil est
+                chaleureux et professionnel. Un garage de confiance à
+                Casablanca."
+              </p>
+              <small class="text-muted">Propriétaire d'un SUV</small>
             </div>
-            <div class="col-md-3">
-                <div class="text-center">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <h3 class="m-0">3</h3>
-                    </div>
-                    <h4>Réparation</h4>
-                    <p>Service professionnel par nos experts</p>
-                </div>
+            <div class="carousel-item text-center p-5">
+              <img
+                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D"
+                class="rounded-circle shadow-sm mb-3"
+                alt="Client 3"
+              />
+              <h5 class="fw-semibold" style="color: var(--text-color-dark)">
+                Youssef M.
+              </h5>
+              <p class="blockquote" style="color: var(--secondary-color)">
+                "J'ai eu une urgence avec ma batterie et ils ont pu intervenir
+                rapidement. Le service de dépannage est efficace et le personnel
+                est très courtois. Je suis très reconnaissant de leur aide."
+              </p>
+              <small class="text-muted">Propriétaire d'un Utilitaire</small>
             </div>
-            <div class="col-md-3">
-                <div class="text-center">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <h3 class="m-0">4</h3>
-                    </div>
-                    <h4>Livraison</h4>
-                    <p>Récupération de votre véhicule prêt à rouler</p>
-                </div>
-            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Précédent</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Suivant</span>
+          </button>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- Contact Section -->
-<section class="contact py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h2 class="mb-4">Contactez-nous</h2>
-                <p class="mb-4">Besoin d'aide ? N'hésitez pas à nous contacter pour toute question ou pour prendre rendez-vous.</p>
-                <div class="d-flex align-items-center mb-3">
-                    <i class="fas fa-phone fa-2x text-primary me-3"></i>
-                    <div>
-                        <h5 class="mb-0">Téléphone</h5>
-                        <p class="mb-0">+212 50 55 25 65</p>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center mb-3">
-                    <i class="fas fa-envelope fa-2x text-primary me-3"></i>
-                    <div>
-                        <h5 class="mb-0">Email</h5>
-                        <p class="mb-0">wafdisouhail@gmail.com</p>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-map-marker-alt fa-2x text-primary me-3"></i>
-                    <div>
-                        <h5 class="mb-0">Adresse</h5>
-                        <p class="mb-0">380 Boulevard Brahim Roudani Casablanca</p>
-                    </div>
-                </div>
-            </div>
-            
+<section class="contact py-5 bg-light" id="contact">
+  <div class="container">
+    <div class="row">
+      <!-- Colonne gauche : Informations de contact -->
+      <div class="col-md-6 mb-4 mb-md-0">
+        <h2 class="mb-4 fw-bold" style="color: var(--primary-color)">
+          Contactez-nous
+        </h2>
+        <p class="mb-4" style="color: var(--secondary-color)">
+          Besoin d'aide ? N'hésitez pas à nous contacter pour toute question ou
+          pour prendre rendez-vous.
+        </p>
+        <div class="d-flex align-items-center mb-3">
+          <i
+            class="fas fa-phone fa-2x me-3"
+            style="color: var(--secondary-color)"
+          ></i>
+          <div>
+            <h5 class="mb-0 fw-semibold" style="color: var(--text-color-dark)">
+              Téléphone
+            </h5>
+            <p class="mb-0" style="color: var(--secondary-color)">
+              +212 50 55 25 65
+            </p>
+          </div>
         </div>
+        <div class="d-flex align-items-center mb-3">
+          <i
+            class="fas fa-envelope fa-2x me-3"
+            style="color: var(--secondary-color)"
+          ></i>
+          <div>
+            <h5 class="mb-0 fw-semibold" style="color: var(--text-color-dark)">
+              Email
+            </h5>
+            <p class="mb-0" style="color: var(--secondary-color)">
+              wafdisouhail@gmail.com
+            </p>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <i
+            class="fas fa-map-marker-alt fa-2x me-3"
+            style="color: var(--secondary-color)"
+          ></i>
+          <div>
+            <h5 class="mb-0 fw-semibold" style="color: var(--text-color-dark)">
+              Adresse
+            </h5>
+            <p class="mb-0" style="color: var(--secondary-color)">
+              380 Boulevard Brahim Roudani Casablanca
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colonne droite : Carte -->
+      <div class="col-md-6">
+        <div class="map-responsive rounded shadow-sm">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.1649461225236!2d-7.636563784798952!3d33.580062580731944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7cdca4fc8143f%3A0x268db6b90c8783d3!2s380%20Bd%20Brahim%20Roudani%2C%20Casablanca%2020250%2C%20Maroc!5e0!3m2!1sfr!2sma!4v1715178870370!5m2!1sfr!2sma"
+            width="100%"
+            height="100%"
+            frameborder="0"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          >
+          </iframe>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<footer class="mt-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h5>À propos</h5>
-                <p>Votre partenaire de confiance pour l'entretien et la réparation automobile. Service professionnel, rapide et fiable.</p>
-            </div>
-            <div class="col-md-4">
-                <h5>Liens rapides</h5>
-                <ul class="list-unstyled">
-                    <li><a href="{% url 'home' %}" class="text-white">Accueil</a></li>
-                    <li><a href="#services" class="text-white">Services</a></li>
-                    <li><a href="#contact" class="text-white">Contact</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h5>Contact</h5>
-                <ul class="list-unstyled">
-                    <li><i class="fas fa-phone me-2"></i> +212 50 55 25 65</li>
-                    <li><i class="fas fa-envelope me-2"></i> wafdisouhail@gmail.com</li>
-                    <li><i class="fas fa-map-marker-alt me-2"></i> 380 Boulevard Brahim Roudani Casablanca</li>
-                </ul>
-            </div>
-        </div>
-        <hr class="mt-4 mb-4">
-        <div class="text-center">
-            <p class="mb-0">&copy; 2025 Garage Auto. Tous droits réservés.</p>
-        </div>
+<footer class="mt-5 bg-dark text-light py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>À propos</h5>
+        <p>
+          Votre partenaire de confiance pour l'entretien et la réparation
+          automobile. Service professionnel, rapide et fiable.
+        </p>
+      </div>
+      <div class="col-md-4">
+        <h5>Liens rapides</h5>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'home' %}" class="text-light">Accueil</a></li>
+          <li><a href="#services" class="text-light">Services</a></li>
+          <li><a href="#contact" class="text-light">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>Contact</h5>
+        <ul class="list-unstyled">
+          <li><i class="fas fa-phone me-2"></i> +212 50 55 25 65</li>
+          <li><i class="fas fa-envelope me-2"></i> garagebaL3arbi@gmail.com</li>
+          <li>
+            <i class="fas fa-map-marker-alt me-2"></i> 380 Boulevard Brahim
+            Roudani Casablanca
+          </li>
+        </ul>
+      </div>
     </div>
+    <hr class="mt-3 mb-3" />
+    <div class="text-center">
+      <p class="mb-0">&copy; 2025 Garage Auto. Tous droits réservés.</p>
+    </div>
+  </div>
 </footer>
 {% endblock %}

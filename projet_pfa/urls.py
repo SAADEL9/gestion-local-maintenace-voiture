@@ -26,7 +26,6 @@ urlpatterns = [
     path('clients/', include('clients.urls')),
     path('vehicules/', include('vehicules.urls')),
     path('mecanicien/',include('mecaniciens.urls')),
-   
-   # path('reparation/', include('reparation.urls')),
+    path('reparation/', include('reparation.urls')),
     path('rendez-vous/', include('rendez_vous.urls')),
 ] 

@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">
+                <i class="fas fa-tools me-2"></i>
+                {% if form.instance.pk %}Modifier{% else %}Nouvelle{% endif %} Réparation
+            </h2>
+            <a href="{% url 'reparation:liste_reparations' %}" class="btn btn-light">
+                <i class="fas fa-arrow-left me-2"></i> Retour à la liste
+            </a>
+        </div>
+        <div class="card-body">
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    {% for error in form.non_field_errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="row">
+                    <!-- Informations du véhicule et du client -->
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0"><i class="fas fa-car me-2"></i>Informations du véhicule</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="{{ form.vehicule.id_for_label }}" class="form-label">Véhicule</label>
+                                    {{ form.vehicule }}
+                                    {% if form.vehicule.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.vehicule.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="{{ form.client.id_for_label }}" class="form-label">Client</label>
+                                    {{ form.client }}
+                                    {% if form.client.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.client.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Informations de la réparation -->
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0"><i class="fas fa-wrench me-2"></i>Détails de la réparation</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="{{ form.mecanicien.id_for_label }}" class="form-label">Mécanicien assigné</label>
+                                    {{ form.mecanicien }}
+                                    {% if form.mecanicien.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.mecanicien.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="{{ form.etat.id_for_label }}" class="form-label">État</label>
+                                    {{ form.etat }}
+                                    {% if form.etat.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.etat.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dates et coûts -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Dates et coûts</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="{{ form.date_debut.id_for_label }}" class="form-label">Date de début</label>
+                                    {{ form.date_debut }}
+                                    {% if form.date_debut.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.date_debut.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="{{ form.date_fin.id_for_label }}" class="form-label">Date de fin prévue</label>
+                                    {{ form.date_fin }}
+                                    {% if form.date_fin.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.date_fin.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="{{ form.cout.id_for_label }}" class="form-label">Coût estimé (€)</label>
+                                    {{ form.cout }}
+                                    {% if form.cout.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.cout.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description et notes -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>Description et notes</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">Description des travaux</label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.description.errors }}
+                            </div>
+                            {% endif %}
+                            <div class="form-text">Décrivez en détail les travaux à effectuer sur le véhicule.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.notes_mecanicien.id_for_label }}" class="form-label">Notes du mécanicien</label>
+                            {{ form.notes_mecanicien }}
+                            {% if form.notes_mecanicien.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.notes_mecanicien.errors }}
+                            </div>
+                            {% endif %}
+                            <div class="form-text">Espace réservé pour les observations techniques du mécanicien.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save me-2"></i> Enregistrer la réparation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control, .form-select {
+        border-radius: 0.25rem;
+        border: 1px solid #ced4da;
+        padding: 0.5rem;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+    
+    .card {
+        border: none;
+        border-radius: 0.5rem;
+    }
+    
+    .card-header {
+        border-bottom: 1px solid rgba(0,0,0,.125);
+    }
+    
+    .btn-primary {
+        padding: 0.5rem 1.5rem;
+    }
+    
+    .invalid-feedback {
+        font-size: 0.875rem;
+    }
+</style>
+{% endblock %} 

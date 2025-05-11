@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm rounded-4 border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+            <h4 class="mb-0"><i class="fas fa-tools me-2"></i>Détails de la Réparation</h4>
+            <div>
+                {% if user.mecanicien %}
+                    <a href="{% url 'reparation:modifier_reparation' reparation.pk %}" class="btn btn-warning btn-sm me-2 rounded-pill">
+                        <i class="fas fa-edit me-1"></i> Modifier
+                    </a>
+                    <a href="{% url 'reparation:supprimer_reparation' reparation.pk %}" class="btn btn-danger btn-sm me-2 rounded-pill">
+                        <i class="fas fa-trash me-1"></i> Supprimer
+                    </a>
+                {% endif %}
+                <a href="{% url 'reparation:liste_reparations' %}" class="btn btn-light btn-sm rounded-pill">
+                    <i class="fas fa-arrow-left me-1"></i> Retour
+                </a>
+            </div>
+        </div>
+        <div class="card-body px-4 py-5">
+            <div class="row g-4">
+                <!-- Infos Générales -->
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 bg-light">
+                        <h5 class="mb-3"><i class="fas fa-info-circle me-2"></i>Informations Générales</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li><strong><i class="fas fa-car me-2 text-muted"></i>Véhicule :</strong> {{ reparation.vehicule.marque }} {{ reparation.vehicule.immatricule }}</li>
+                            <li><strong><i class="fas fa-user me-2 text-muted"></i>Client :</strong> {{ reparation.client.nom }} {{ reparation.client.prenom }}</li>
+                            <li><strong><i class="fas fa-wrench me-2 text-muted"></i>Mécanicien :</strong> {{ reparation.mecanicien.nom }} {{ reparation.mecanicien.prenom }}</li>
+                            <li>
+                                <strong><i class="fas fa-tag me-2 text-muted"></i>État :</strong>
+                                <span class="badge {% if reparation.etat == 'termine' %}bg-success
+                                                   {% elif reparation.etat == 'en_cours' %}bg-warning
+                                                   {% elif reparation.etat == 'en_pause' %}bg-info
+                                                   {% elif reparation.etat == 'annule' %}bg-danger
+                                                   {% else %}bg-secondary{% endif %}">
+                                    {{ reparation.get_etat_display }}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Dates & Coût -->
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 bg-light">
+                        <h5 class="mb-3"><i class="fas fa-calendar-alt me-2"></i>Dates et Coûts</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li><strong><i class="fas fa-play me-2 text-muted"></i>Début :</strong> {{ reparation.date_debut|date:"d/m/Y H:i" }}</li>
+                            <li><strong><i class="fas fa-stop me-2 text-muted"></i>Fin :</strong> {{ reparation.date_fin|date:"d/m/Y H:i"|default:"-" }}</li>
+                            <li>
+                                <strong><i class="fas fa-euro-sign me-2 text-muted"></i>Coût :</strong>
+                                {% if reparation.cout %}
+                                    <span class="badge bg-primary">{{ reparation.cout }} €</span>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </li>
+                            <li><strong><i class="fas fa-clock me-2 text-muted"></i>Création :</strong> {{ reparation.date_creation|date:"d/m/Y H:i" }}</li>
+                            <li><strong><i class="fas fa-history me-2 text-muted"></i>Dernière modif :</strong> {{ reparation.date_modification|date:"d/m/Y H:i" }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mt-5">
+                <div class="bg-white border rounded-3 p-4 shadow-sm">
+                    <h5 class="mb-3"><i class="fas fa-clipboard-list me-2"></i>Description</h5>
+                    <p class="mb-0 text-muted">{{ reparation.description|linebreaks }}</p>
+                </div>
+            </div>
+
+            {% if reparation.notes_mecanicien %}
+            <!-- Notes -->
+            <div class="mt-4">
+                <div class="bg-white border rounded-3 p-4 shadow-sm">
+                    <h5 class="mb-3"><i class="fas fa-sticky-note me-2"></i>Notes du Mécanicien</h5>
+                    <p class="mb-0 text-muted">{{ reparation.notes_mecanicien|linebreaks }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.5em 0.8em;
+        border-radius: 2rem;
+        font-weight: 500;
+    }
+
+    .list-unstyled li {
+        margin-bottom: 0.6rem;
+    }
+
+    .btn i {
+        font-size: 0.9rem;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+</style>
+{% endblock %}
