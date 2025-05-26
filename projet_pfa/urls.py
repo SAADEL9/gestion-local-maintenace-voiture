@@ -19,7 +19,6 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from administration.admin import admin_site
 
-
 urlpatterns = [
     path('admin/', admin_site.urls),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
@@ -28,4 +27,5 @@ urlpatterns = [
     path('mecanicien/',include('mecaniciens.urls')),
     path('reparation/', include('reparation.urls')),
     path('rendez-vous/', include('rendez_vous.urls')),
-] 
+    path('chatbot/', include('chatbot.urls')),  # Add this line
+]

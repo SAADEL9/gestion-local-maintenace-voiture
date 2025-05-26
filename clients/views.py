@@ -124,16 +124,3 @@ def prendre_rendez_vous(request, pk):
         pass
     return render(request, 'clients/prendre_rendez_vous.html', {'vehicules': vehicules})
 
-#def mes_rendez_vous(request, pk):
-    #client = get_object_or_404(Client, pk=pk)
-    #rendez_vous = RendezVous.objects.filter(client=client)
-    #return render(request, 'clients/mes_rendez_vous.html', {'rendez_vous': rendez_vous})
-
-#def annuler_rendez_vous(request, pk, rendez_vous_pk):
-    #client = get_object_or_404(Client, pk=pk)
-    #rendez_vous = get_object_or_404(RendezVous, pk=rendez_vous_pk, client=client)
-    #if request.method == 'POST':
-        #rendez_vous.delete()
-        #messages.success(request, 'Rendez-vous annulé avec succès!')
-        #return redirect('mes_rendez_vous', pk=client.pk)
-    #return render(request, 'clients/annuler_rendez_vous.html', {'rendez_vous': rendez_vous})

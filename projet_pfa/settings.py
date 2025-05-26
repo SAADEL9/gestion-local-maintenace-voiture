@@ -44,11 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'vehicules',
+    'vehicules.apps.VehiculesConfig',
     'clients',
     'reparation',
     'rendez_vous',
     'mecaniciens',
+    'chatbot',
     'widget_tweaks',
     
 ]
